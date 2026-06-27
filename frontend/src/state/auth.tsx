@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import api from '../lib/api';
-import type { AuthResponse, Role, RegisterRequest } from '../types';
+import type { AuthResponse, RegisterRequest, Role } from '../types';
 
 type AuthState = {
   user: AuthResponse | null;
@@ -39,10 +39,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const register = async (fullName: string, email: string, password: string, role: string) => {
+  const register = async (fullName: string, email: string, password: string, role: Role) => {
     setLoading(true);
     try {
-      await api.post<AuthResponse>('/api/auth/register', { fullName, email, password, role: role as Role });
+      const payload: RegisterRequest = { fullName, email, password, role };
+      await api.post<AuthResponse>('/api/auth/register', payload);
     } finally {
       setLoading(false);
     }

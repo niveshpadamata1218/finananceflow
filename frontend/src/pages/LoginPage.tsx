@@ -38,7 +38,7 @@ export function LoginPage() {
           push({ title: 'Validation Error', message: parsed.error.issues[0]?.message, tone: 'error' });
           return;
         }
-        await register(fullName, email, password, role);
+        await register(parsed.data.fullName, parsed.data.email, parsed.data.password, parsed.data.role);
         push({ title: 'Registration Successful', message: 'Welcome to FinanceFlow AI! Please log in.', tone: 'success' });
         setIsRegister(false); // Switch to login form after successful registration
       } else {
