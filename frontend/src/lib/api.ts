@@ -18,7 +18,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('financeflow_access_token');
       localStorage.removeItem('financeflow_refresh_token');
-    }
+    } 
     return Promise.reject(error);
   },
 );

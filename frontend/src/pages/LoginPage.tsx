@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { useAuth } from '../state/auth';
 import { useToast } from '../state/toast';
 import { Link } from 'react-router-dom';
+import type { Role } from '../types';
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -21,7 +22,7 @@ export function LoginPage() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('ACCOUNTANT'); // Default role
+  const [role, setRole] = useState<Role>('ACCOUNTANT');
   const [submitting, setSubmitting] = useState(false);
   const { login, register } = useAuth();
   const { push } = useToast();
@@ -103,7 +104,12 @@ export function LoginPage() {
             {isRegister && (
               <div>
                 <label className="label-text" htmlFor="role">Role</label>
-                <select id="role" className="input-field" value={role} onChange={(e) => setRole(e.target.value)}>
+ <select
+  id="role"
+  className="input-field"
+  value={role}
+  onChange={(e) => setRole(e.target.value as Role)}
+>
                   <option value="ACCOUNTANT">Accountant</option>
                   <option value="MANAGER">Manager</option>
                   <option value="ADMIN">Admin</option>
